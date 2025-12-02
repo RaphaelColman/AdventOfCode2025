@@ -1,3 +1,3 @@
-# Changelog for AdventOfCode2022
+# Changelog for AdventOfCode2025
 
 ## Unreleased changes

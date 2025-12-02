@@ -41,10 +41,10 @@ See Day1.hs for an example, which has been implemented for day 1.
 To run, you can use the GHCI repl. For example:
 ```
 ❯ stack ghci
-Using main module: 1. Package `AdventOfCode2022' component AdventOfCode2022:exe:AdventOfCode2022-exe with main-is file: /Users/raphael.colman/Dev/AdventOfCode2022/app/Main.hs
-AdventOfCode2022> initial-build-steps (lib + exe)
+Using main module: 1. Package `AdventOfCode2025' component AdventOfCode2025:exe:AdventOfCode2025-exe with main-is file: /Users/raphael.colman/Dev/AdventOfCode2025/app/Main.hs
+AdventOfCode2025> initial-build-steps (lib + exe)
 The following GHC options are incompatible with GHCi and have not been passed to it: -threaded
-Configuring GHCi with the following packages: AdventOfCode2022
+Configuring GHCi with the following packages: AdventOfCode2025
 ...
 
 λ> aoc1
@@ -59,7 +59,7 @@ This is good for trialling solutions, because `:r` will reload your changes. You
 Alternatively, you can build and run the application completely
 ```
 ❯ stack build
-❯ stack exec AdventOfCode2022-exe
+❯ stack exec AdventOfCode2025-exe
 Which day of Advent do you want to solve? [1-25]
 1
 Solution:

@@ -1,10 +1,10 @@
-name:                AdventOfCode2022
+name:                AdventOfCode2025
 version:             0.1.0.0
-github:              "githubuser/AdventOfCode2022"
+github:              "githubuser/AdventOfCode2025"
 license:             BSD3
 author:              "Raphael Colman"
 maintainer:          "example@example.com"
-copyright:           "2022 Raphael Colman"
+copyright:           "2025 Raphael Colman"
 
 extra-source-files:
 - README.md
@@ -17,7 +17,7 @@ extra-source-files:
 # To avoid duplicated efforts in documentation and dealing with the
 # complications of embedding Haddock markup inside cabal files, it is
 # common to point users to the README.md file.
-description:         Please see the README on GitHub at <https://github.com/githubuser/AdventOfCode2022#readme>
+description:         Please see the README on GitHub at <https://github.com/githubuser/AdventOfCode2025#readme>
 
 dependencies:
 - base >= 4.7 && < 5
@@ -47,7 +47,7 @@ library:
   source-dirs: src
 
 executables:
-  AdventOfCode2022-exe:
+  AdventOfCode2025-exe:
     main:                Main.hs
     source-dirs:         app
     ghc-options:
@@ -55,10 +55,10 @@ executables:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
-    - AdventOfCode2022
+    - AdventOfCode2025
 
 tests:
-  AdventOfCode2022-test:
+  AdventOfCode2025-test:
     main:                Spec.hs
     source-dirs:         test
     ghc-options:
@@ -66,4 +66,4 @@ tests:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
-    - AdventOfCode2022
+    - AdventOfCode2025

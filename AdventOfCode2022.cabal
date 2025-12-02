@@ -4,14 +4,14 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 
-name:           AdventOfCode2022
+name:           AdventOfCode2025
 version:        0.1.0.0
-description:    Please see the README on GitHub at <https://github.com/githubuser/AdventOfCode2022#readme>
-homepage:       https://github.com/githubuser/AdventOfCode2022#readme
-bug-reports:    https://github.com/githubuser/AdventOfCode2022/issues
+description:    Please see the README on GitHub at <https://github.com/githubuser/AdventOfCode2025#readme>
+homepage:       https://github.com/githubuser/AdventOfCode2025#readme
+bug-reports:    https://github.com/githubuser/AdventOfCode2025/issues
 author:         Raphael Colman
 maintainer:     example@example.com
-copyright:      2022 Raphael Colman
+copyright:      2025 Raphael Colman
 license:        BSD3
 license-file:   LICENSE
 build-type:     Simple
@@ -21,7 +21,7 @@ extra-source-files:
 
 source-repository head
   type: git
-  location: https://github.com/githubuser/AdventOfCode2022
+  location: https://github.com/githubuser/AdventOfCode2025
 
 library
   exposed-modules:
@@ -68,7 +68,7 @@ library
       Solutions.Day9
       Web.AoCUtils
   other-modules:
-      Paths_AdventOfCode2022
+      Paths_AdventOfCode2025
   hs-source-dirs:
       src
   build-depends:
@@ -96,15 +96,15 @@ library
     , trifecta
   default-language: Haskell2010
 
-executable AdventOfCode2022-exe
+executable AdventOfCode2025-exe
   main-is: Main.hs
   other-modules:
-      Paths_AdventOfCode2022
+      Paths_AdventOfCode2025
   hs-source-dirs:
       app
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      AdventOfCode2022
+      AdventOfCode2025
     , PSQueue
     , advent-of-code-api >=0.2.8
     , base >=4.7 && <5
@@ -129,16 +129,16 @@ executable AdventOfCode2022-exe
     , trifecta
   default-language: Haskell2010
 
-test-suite AdventOfCode2022-test
+test-suite AdventOfCode2025-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
-      Paths_AdventOfCode2022
+      Paths_AdventOfCode2025
   hs-source-dirs:
       test
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      AdventOfCode2022
+      AdventOfCode2025
     , PSQueue
     , advent-of-code-api >=0.2.8
     , base >=4.7 && <5
