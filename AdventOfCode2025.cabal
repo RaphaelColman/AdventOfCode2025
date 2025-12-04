@@ -1,6 +1,6 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.35.0.
+-- This file has been generated from package.yaml by hpack version 0.37.0.
 --
 -- see: https://github.com/sol/hpack
 
@@ -87,6 +87,7 @@ library
     , mtl
     , parser-combinators
     , parsers
+    , range
     , regex-tdfa
     , safe
     , split
@@ -120,6 +121,7 @@ executable AdventOfCode2025-exe
     , mtl
     , parser-combinators
     , parsers
+    , range
     , regex-tdfa
     , safe
     , split
@@ -133,6 +135,7 @@ test-suite AdventOfCode2025-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
+      Solutions.Day1Spec
       Paths_AdventOfCode2025
   hs-source-dirs:
       test
@@ -147,6 +150,8 @@ test-suite AdventOfCode2025-test
     , directory
     , dotenv
     , finite-typelits
+    , hspec
+    , hspec-discover
     , lens
     , linear
     , monad-extras
@@ -154,6 +159,7 @@ test-suite AdventOfCode2025-test
     , mtl
     , parser-combinators
     , parsers
+    , range
     , regex-tdfa
     , safe
     , split
