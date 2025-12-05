@@ -9,14 +9,18 @@ import Common.AoCSolutions
     printTestSolutions,
   )
 import Data.Range
-import Text.Parser.Char
-import Text.Trifecta (Parser, integer, some, token, manyTill, integer')
-import Control.Monad (void)
-import Text.Parser.LookAhead (LookAheadParsing(lookAhead))
+  ( Bound (Bound),
+    Range (SingletonRange, SpanRange),
+    inRanges,
+    mergeRanges,
+    (+=+),
+  )
+import Text.Parser.Char (CharParsing (char), newline)
+import Text.Trifecta (Parser, integer, integer', manyTill, some)
 
 aoc5 :: IO ()
 aoc5 = do
-  --printSolutions 5 $ MkAoCSolution parseInput part1
+  printSolutions 5 $ MkAoCSolution parseInput part1
   printSolutions 5 $ MkAoCSolution parseInput part2
 
 parseInput :: Parser ([Range Integer], [Integer])
@@ -27,17 +31,20 @@ parseInput = do
 
 parseRanges :: Parser [Range Integer]
 parseRanges = do
-  manyTill parseIngredientRange (newline)
+  parseIngredientRange `manyTill` newline
 
 parseIngredientRange :: Parser (Range Integer)
 parseIngredientRange = do
-  start <- integer'
-  char '-'
-  end <- integer'
-  newline
+  start <- integer' <* char '-'
+  end <- integer' <* newline
   pure $ start +=+ end
 
+part1 :: (Ord a) => ([Range a], [a]) -> Int
 part1 (ranges, ingredientIds) = length $ filter (inRanges ranges) ingredientIds
 
-part2 (ranges, _) = length $ mergeRanges ranges
---I need to get the size of each range and sum them up.
+part2 :: ([Range Integer], b) -> Integer
+part2 = sum . map rangeLength . mergeRanges . fst
+
+rangeLength :: Range Integer -> Integer
+rangeLength (SpanRange (Bound lower _) (Bound upper _)) = upper - lower + 1
+rangeLength (SingletonRange _) = 1
