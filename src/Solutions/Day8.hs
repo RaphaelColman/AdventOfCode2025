@@ -14,7 +14,7 @@ import Common.AoCSolutions
   )
 import Common.FunctorUtils (fmap2, fmap3)
 import Control.Lens
-import Data.Foldable (Foldable (foldl'), minimumBy)
+import Data.Foldable (Foldable (foldl'), minimumBy, foldlM, foldrM)
 import Data.Function (on)
 import Data.List (sort, sortBy)
 import Data.Map.Strict (Map)
@@ -23,12 +23,14 @@ import Data.Ord (Down (..), comparing)
 import Data.Set (Set)
 import qualified Data.Set as S
 import Debug.Trace
-import Linear (Metric (distance))
+import Linear (Metric (distance), _x)
 import Linear.V3 (V3 (V3))
 import Text.Parser.Combinators (some)
 import Text.Parser.Token (commaSep, integer)
 import Text.Printf (printf)
 import Text.Trifecta (Parser)
+import System.Exit (exitSuccess)
+import Common.EitherUtils
 
 -- Map of node to circuit id
 type CircuitMap = Map (V3 Integer) Integer
@@ -45,9 +47,8 @@ makeLenses ''CircuitMapState
 
 aoc8 :: IO ()
 aoc8 = do
-  printSolutions 8 $ MkAoCSolution parseInput part1
-
--- printSolutions 8 $ MkAoCSolution parseInput part2
+  --printSolutions 8 $ MkAoCSolution parseInput part1
+  printSolutions 8 $ MkAoCSolution parseInput part2
 
 parseInput :: Parser [V3 Integer]
 parseInput = do
@@ -60,6 +61,11 @@ part1 nodes =
     & addUnconnectedNodes nodes
     & _circuitMap
     & checkSum
+
+part2 :: [V3 Integer] -> Either String Integer
+part2 nodes = do
+  (n1, n2) <- mapLeft show $ swapEither $ buildUntilSingleCircuit nodes
+  pure $ (n1 ^. _x) * (n2 ^. _x)
 
 -- | Order all pairs of points by their distance from each other, from largest to smallest
 orderPairsByDistance :: [V3 Integer] -> [(V3 Integer, V3 Integer)]
@@ -74,6 +80,23 @@ buildCircuitMap nodes = foldl' (flip processPair) initialState someOrderedPairs
   where
     (someOrderedPairs, remainingOrderedPairs) = splitAt 1000 $ orderPairsByDistance nodes
     initialState = MkCircuitMapState 0 M.empty
+
+buildUntilSingleCircuit :: [V3 Integer] -> Either (V3 Integer, V3 Integer) CircuitMapState
+buildUntilSingleCircuit nodes = foldlM (flip processF) initialState orderedPairs
+  where
+    orderedPairs = orderPairsByDistance nodes
+    initialState = MkCircuitMapState 0 M.empty
+    processF :: (V3 Integer, V3 Integer) -> CircuitMapState -> Either (V3 Integer, V3 Integer) CircuitMapState
+    processF (n1, n2) state =
+      let newState = processPair (n1, n2) state
+          fullMap = addUnconnectedNodes nodes newState
+       in if isOneCircuit (fullMap ^. circuitMap)
+            then Left (n1, n2)
+            else Right newState
+
+isOneCircuit :: CircuitMap -> Bool
+isOneCircuit mp = S.size ids == 1
+  where ids = M.foldr S.insert S.empty mp
 
 processPair :: (V3 Integer, V3 Integer) -> CircuitMapState -> CircuitMapState
 processPair (p1, p2) state = case (c1, c2) of
@@ -124,6 +147,7 @@ countCircuits = M.foldrWithKey' f M.empty
     f :: V3 Integer -> Integer -> Map Integer Integer -> Map Integer Integer
     f node cid = M.insertWith (+) cid 1
 
+checkSum :: Map (V3 Integer) Integer -> Integer
 checkSum mp = snd <$> sorted & take 3 & product
   where
     counts = M.toList $ countCircuits mp
